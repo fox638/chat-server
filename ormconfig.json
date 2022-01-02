@@ -1,0 +1,18 @@
+{
+  "type": "postgres",
+  "name": "default",
+  "host": "10.0.0.23",
+  "port": "5432",
+  "username": "postgres",
+  "password": "postol",
+  "database": "mychat",
+  "synchronize": true,
+  "autoLoadEntities": true,
+  "logging": false,
+  "migrations": [
+    "src/migration/**/*.ts"
+  ],
+  "subscribers": [
+    "src/subscriber/**/*.ts"
+  ]
+}

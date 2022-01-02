@@ -1,0 +1,11 @@
+type Query {
+  _dummy: Boolean
+}
+
+type Mutation {
+  _dummy: Boolean
+}
+
+type Subscription {
+  _dummy: Boolean
+}

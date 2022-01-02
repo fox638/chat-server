@@ -1,0 +1,39 @@
+enum AuthStatusEnum {
+  SUCCESS
+  ERROR
+}
+
+type AuthValidationError implements ErrorInterface {
+  message: String
+  errors: [ValidationError]
+}
+
+input SignUpInput {
+  email: String!
+  username: String!
+  password: String!
+}
+
+input SignInInput {
+  username: String!
+  password: String!
+}
+
+type SignUpPayload {
+  userId: ID
+  user: User
+  status: AuthStatusEnum
+  errors: AuthValidationError
+}
+
+type SignInPayload {
+  userId: ID
+  user: User
+  status: AuthStatusEnum
+  errors: AuthValidationError
+}
+
+type AuthMutation {
+  signUp(input: SignUpInput!): SignUpPayload
+  signIn(input: SignInInput!): SignInPayload
+}

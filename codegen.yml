@@ -1,0 +1,9 @@
+overwrite: true
+generates:
+  ./src/shared/generate/gql/graphql.ts:
+    schema: 'src/**/*.graphql'
+    plugins:
+      - typescript
+      - typescript-resolvers
+    config:
+      maybeValue: T | null | undefined

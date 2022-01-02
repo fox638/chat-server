@@ -1,0 +1,8 @@
+interface ErrorInterface {
+  message: String
+}
+
+type ValidationError {
+  message: String
+  name: String
+}
