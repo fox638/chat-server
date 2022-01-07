@@ -70,6 +70,7 @@ export type SignInPayload = {
   __typename?: 'SignInPayload';
   userId?: Maybe<Scalars['ID']>;
   user?: Maybe<User>;
+  token?: Maybe<Scalars['String']>;
   status?: Maybe<AuthStatusEnum>;
   errors?: Maybe<AuthValidationError>;
 };
@@ -111,6 +112,10 @@ export type ValidationError = {
 export type ResolverTypeWrapper<T> = Promise<T> | T;
 
 
+export type ResolverWithResolve<TResult, TParent, TContext, TArgs> = {
+  resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
+};
+
 export type LegacyStitchingResolver<TResult, TParent, TContext, TArgs> = {
   fragment: string;
   resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
@@ -123,6 +128,7 @@ export type NewStitchingResolver<TResult, TParent, TContext, TArgs> = {
 export type StitchingResolver<TResult, TParent, TContext, TArgs> = LegacyStitchingResolver<TResult, TParent, TContext, TArgs> | NewStitchingResolver<TResult, TParent, TContext, TArgs>;
 export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
   | ResolverFn<TResult, TParent, TContext, TArgs>
+  | ResolverWithResolve<TResult, TParent, TContext, TArgs>
   | StitchingResolver<TResult, TParent, TContext, TArgs>;
 
 export type ResolverFn<TResult, TParent, TContext, TArgs> = (
@@ -258,6 +264,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 export type SignInPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['SignInPayload'] = ResolversParentTypes['SignInPayload']> = {
   userId?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  token?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   status?: Resolver<Maybe<ResolversTypes['AuthStatusEnum']>, ParentType, ContextType>;
   errors?: Resolver<Maybe<ResolversTypes['AuthValidationError']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;

@@ -45,7 +45,7 @@ export class UserRepository extends Repository<UserEntity> {
     if (await user.validationPassword(password)) {
       return [user.toDto(), null];
     } else {
-      return [null, new AuthenticationError('password error')];
+      return [null, new AuthenticationError('AuthenticationError')];
     }
   }
 

@@ -12,7 +12,7 @@ import { Args, Context, ResolveField, Resolver } from '@nestjs/graphql';
 
 import { AuthService } from './auth.service';
 import { SignUpInputDto } from './dto/SignUpInputDto';
-
+export const MAX_AGE = 60 * 60 * 8; // 8 hours
 @Resolver('AuthMutation')
 export class AuthResolver {
   constructor(
@@ -32,25 +32,34 @@ export class AuthResolver {
     @Context() context: any,
     @Args('input') input: SignInInput,
   ): Promise<AuthMutation['signIn']> {
-    const user = await this.authService.signIn(input);
+    const [user, error] = await this.authService.signIn(input);
 
     if (user) {
       const authToken = this.utilService.createJWT(user.username);
       const res: Response = context?.req?.res;
+
       res?.cookie(AUTH_COOKIE_NAME, authToken, {
+        maxAge: MAX_AGE,
+        expires: new Date(Date.now() + MAX_AGE * 1000),
         httpOnly: true,
+        secure: false,
+        path: '/',
+        sameSite: 'lax',
       });
 
       return {
         user,
+        token: authToken,
         userId: user.id,
         status: AuthStatusEnum.Success,
       };
     } else {
-      status: AuthStatusEnum.Error;
-      errors: {
-        message: 'Неверный логин или пароль';
-      }
+      return {
+        status: AuthStatusEnum.Error,
+        errors: {
+          message: error.message || 'Неверный логин или пароль',
+        },
+      };
     }
   }
 }

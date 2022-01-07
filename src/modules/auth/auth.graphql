@@ -29,6 +29,7 @@ type SignUpPayload {
 type SignInPayload {
   userId: ID
   user: User
+  token: String
   status: AuthStatusEnum
   errors: AuthValidationError
 }

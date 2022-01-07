@@ -1,6 +1,7 @@
 import { EmailService } from 'modules/common/email.service';
 import {
   AuthStatusEnum,
+  Maybe,
   SignInInput,
   SignUpPayload,
 } from 'shared/generate/gql/graphql';
@@ -9,6 +10,7 @@ import { UserRepository } from 'user/repositories/user.repository';
 import { Injectable } from '@nestjs/common';
 
 import { SignUpInputDto } from './dto/SignUpInputDto';
+import { UserDto } from 'user/dto/user.dto';
 
 @Injectable()
 export class AuthService {
@@ -65,12 +67,14 @@ export class AuthService {
     };
   }
 
-  async signIn(input: SignInInput) {
+  async signIn(
+    input: SignInInput,
+  ): Promise<[user: Maybe<UserDto>, error: Maybe<Error>]> {
     const [user, error] = await this.userRepository.signIn(input);
     if (error) {
-      throw error;
+      return [null, error];
     }
 
-    return user;
+    return [user, null];
   }
 }

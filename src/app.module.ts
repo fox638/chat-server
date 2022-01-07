@@ -54,6 +54,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
             'request.credentials': 'include',
           },
         },
+        cors: {
+          origin: 'http://localhost:3031',
+          credentials: true,
+        },
       }),
       inject: [UtilService, UserRepository],
       imports: [UserModule],
