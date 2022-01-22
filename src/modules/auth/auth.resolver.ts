@@ -62,4 +62,10 @@ export class AuthResolver {
       };
     }
   }
+
+  async logout(@Context() context: any): Promise<AuthMutation['logout']> {
+    const res: Response = context?.req?.res;
+    res.clearCookie(AUTH_COOKIE_NAME);
+    return true;
+  }
 }

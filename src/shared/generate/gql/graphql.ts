@@ -17,6 +17,7 @@ export type AuthMutation = {
   __typename?: 'AuthMutation';
   signUp?: Maybe<SignUpPayload>;
   signIn?: Maybe<SignInPayload>;
+  logout?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -191,13 +192,13 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   AuthMutation: ResolverTypeWrapper<AuthMutation>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   AuthStatusEnum: AuthStatusEnum;
   AuthValidationError: ResolverTypeWrapper<AuthValidationError>;
   String: ResolverTypeWrapper<Scalars['String']>;
   ErrorInterface: ResolversTypes['AuthValidationError'];
   MeQuery: ResolverTypeWrapper<MeQuery>;
   Mutation: ResolverTypeWrapper<{}>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Query: ResolverTypeWrapper<{}>;
   SignInInput: SignInInput;
   SignInPayload: ResolverTypeWrapper<SignInPayload>;
@@ -212,12 +213,12 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   AuthMutation: AuthMutation;
+  Boolean: Scalars['Boolean'];
   AuthValidationError: AuthValidationError;
   String: Scalars['String'];
   ErrorInterface: ResolversParentTypes['AuthValidationError'];
   MeQuery: MeQuery;
   Mutation: {};
-  Boolean: Scalars['Boolean'];
   Query: {};
   SignInInput: SignInInput;
   SignInPayload: SignInPayload;
@@ -232,6 +233,7 @@ export type ResolversParentTypes = {
 export type AuthMutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['AuthMutation'] = ResolversParentTypes['AuthMutation']> = {
   signUp?: Resolver<Maybe<ResolversTypes['SignUpPayload']>, ParentType, ContextType, RequireFields<AuthMutationSignUpArgs, 'input'>>;
   signIn?: Resolver<Maybe<ResolversTypes['SignInPayload']>, ParentType, ContextType, RequireFields<AuthMutationSignInArgs, 'input'>>;
+  logout?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

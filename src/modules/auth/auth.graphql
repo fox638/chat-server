@@ -37,4 +37,5 @@ type SignInPayload {
 type AuthMutation {
   signUp(input: SignUpInput!): SignUpPayload
   signIn(input: SignInInput!): SignInPayload
+  logout: Boolean
 }
