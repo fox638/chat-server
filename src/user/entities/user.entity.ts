@@ -5,12 +5,15 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { UserDto } from 'user/dto/user.dto';
 import * as bcrypt from 'bcryptjs';
+import { ChatEntity } from 'modules/chat/entities/chat.entity';
+import { MessageEntity } from 'modules/message/entities';
 
 @Entity({ name: 'user' })
 export class UserEntity extends AbstractEntity<UserDto> {
@@ -32,6 +35,12 @@ export class UserEntity extends AbstractEntity<UserDto> {
 
   @Column({ type: 'text' })
   salt: string;
+
+  @ManyToMany((type) => ChatEntity, (chats) => chats.users)
+  chats: ChatEntity[];
+
+  @OneToMany((type) => MessageEntity, (message) => message.user)
+  messages: MessageEntity;
 
   async validationPassword(password: string): Promise<boolean> {
     const hash = await bcrypt.hash(password, this.salt);

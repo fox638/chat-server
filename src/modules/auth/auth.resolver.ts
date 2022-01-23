@@ -12,7 +12,9 @@ import { Args, Context, ResolveField, Resolver } from '@nestjs/graphql';
 
 import { AuthService } from './auth.service';
 import { SignUpInputDto } from './dto/SignUpInputDto';
+
 export const MAX_AGE = 60 * 60 * 8; // 8 hours
+
 @Resolver('AuthMutation')
 export class AuthResolver {
   constructor(
@@ -65,7 +67,7 @@ export class AuthResolver {
 
   async logout(@Context() context: any): Promise<AuthMutation['logout']> {
     const res: Response = context?.req?.res;
-    res.clearCookie(AUTH_COOKIE_NAME);
+    res.cookie(AUTH_COOKIE_NAME, '', { maxAge: 0 });
     return true;
   }
 }
